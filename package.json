@@ -7,10 +7,15 @@
     "test": "jest --forceExit",
     "start": "node server.js"
   },
-
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "knex": "^0.18.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "supertest": "^4.0.2"
   }
 }

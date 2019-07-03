@@ -76,10 +76,34 @@ app.post('/api/v1/palettes', (request, response) => {
     });
 });
 
+app.put('/api/v1/projects/:id', (request, response) => {
+  const { project_name } = request.body;
+  const { id } = request.params;
+  if (!project_name) {
+    response.status(422).json({
+      error: 'You did not update the project name. Please update if you so wish.'
+  })
+  } else {
+    database('projects')
+      .where({id})
+      .update({project_name})
+      .then(project => {
+        if(!project) {
+          response.status(404).json({error: `Project not found with ${id}`})
+        } else {
+          response.status(204).send();
+        }
+      })
+      .catch(error => {
+        response.status(500).json({error})
+      })
+  }
+  
 
 
-//POST - individual project
-//POST - individual palette
+
+
+})
 
 //PUT - individual project
 //PUT - individual palette

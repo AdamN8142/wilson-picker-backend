@@ -79,7 +79,7 @@ describe('Server', () => {
         it('should update a project', async () => {
             const projectToUpdate = await database('projects').first();
             const { id } = projectToUpdate;
-            projectToUpdate.project_name = 'Colorado Colors';
+            projectToUpdate.project_name = 'Wyoming Colors';
             const response = await request(app)
                 .put(`/api/v1/projects/${id}`)
                 .send(projectToUpdate)
@@ -87,6 +87,20 @@ describe('Server', () => {
                 .where({ id })
                 .first();
             expect(project.project_name).toEqual(projectToUpdate.project_name)
+        })
+    });
+    describe('PUT /api/v1/palettes/:id', () => {
+        it('should update a palette', async () => {
+            const paletteToUpdate = await database('palettes').first();
+            const { id } = paletteToUpdate;
+            paletteToUpdate.palette_name = 'Coolers';
+            const response = await request(app)
+                .put(`/api/v1/palettes/${id}`)
+                .send(paletteToUpdate)
+            const palette = await database('palettes')
+                .where({ id })
+                .first();
+            expect(palette.palette_name).toEqual(paletteToUpdate.palette_name)
         })
     });
 

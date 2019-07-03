@@ -17,8 +17,6 @@ app.listen(app.get('port'), () => {
 });
 
 
-app.locals.projects = []
-
 
 app.get('/api/v1/projects', async (request, response ) => {
   const projects = await database('projects').select();
@@ -98,14 +96,34 @@ app.put('/api/v1/projects/:id', (request, response) => {
         response.status(500).json({error})
       })
   }
-  
-
-
-
-
 })
 
-//PUT - individual project
+app.put('/api/v1/palettes/:id', (request, response) => {
+  const palette = request.body;
+  const { id } = request.params;
+  for (let requiredParameter of ['palette_name', 'color_1', 'color_2', 'color_3', 'color_4', 'color_5', 'project_id']) { 
+    if (!palette[requiredParameter]) {  
+      return response 
+        .status(422) 
+        .send({ error: `Expected format: { palette_name: <String>, color_1: <String>, color_2: <String>, color_3: <String>, color_4: <String>, color_5: <String>, project_id: <Integer> }. You're missing a "${requiredParameter}" property.` });
+    }
+  }
+    database('palettes')
+      .where({id})
+      .update({...palette})
+      .then(result => {
+        if(!result) {
+          response.status(404).json({error: `Project not found with ${id}`})
+        } else {
+          response.status(204).send();
+        }
+      })
+      .catch(error => {
+        response.status(500).json({error})
+      })
+  })
+
+
 //PUT - individual palette
 
 //DELETE - individual projec

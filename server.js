@@ -1,15 +1,23 @@
+const environment = process.env.NODE_ENV || 'development'
+const configuration = require('./knexfile')[environment];
+const database = require('knex')(configuration);
 const express = require('express');
-require('dotenv').config();
 const app = express();
+// const bodyParser = require("body-parser");
+
+require('dotenv').config();
 app.use(express.json());
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3001);
+// app.use(bodyParser.json());
+
+
 
 app.listen(app.get('port'), () => {
  console.log(`Trying out environment variables over on http://localhost:${app.get('port')}`);
 });
 
 
-app.locals.projects =
+app.locals.projects = []
 
 
 app.get('/api/v1/projects', async (request, response ) => {
@@ -41,3 +49,4 @@ app.get('/api/v1/palettes/:id', async (request, response) => {
 
 //DELETE - individual projec
 //DELETE - individual palette
+ module.exports = app;

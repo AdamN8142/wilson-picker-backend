@@ -2,7 +2,6 @@ const projects = [
   {project_name: 'Fall Colors'},
   {project_name: 'Spring Colors'}
 ];
-
 const palettes = [
   {
     palette_name: 'Fall Palette',
@@ -21,7 +20,6 @@ const palettes = [
     color_5: '#F5461F'
   }
 ];
-
 const createProject = (knex, project) => {
   return knex('projects')
     .insert({
@@ -29,7 +27,6 @@ const createProject = (knex, project) => {
     }, 'id')
     .then(id => {
       let palettePromises = [];
-
       palettes.forEach(palette => {
         palettePromises.push(createPalette(knex, {
               palette_name: palette.palette_name,
@@ -40,17 +37,14 @@ const createProject = (knex, project) => {
       return Promise.all(palettePromises)
     })
 }
-
 const createPalette = (knex, palette) => {
   return knex('palettes').insert(palette)
 }
-
 exports.seed = function(knex) {
   return knex('palettes').del()
     .then(() => knex('projects').del())
     .then(() => {
       let projectPromises = [];
-
       projects.forEach(project => {
         projectPromises.push(createProject(knex, project))
       });

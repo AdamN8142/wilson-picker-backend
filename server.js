@@ -40,6 +40,25 @@ app.get('/api/v1/palettes/:id', async (request, response) => {
   response.status(200).json(palette)
 })
 
+app.post('/api/v1/projects', (request, response) => {
+  const { project_name }  = request.body;
+  if(!project_name) {
+    response.status(422).json({
+      error: 'You are missing a project name. Please specify a name and try again.'
+    })
+  } else {
+    const newProject = request.body
+    database('projects').insert(newProject, 'id') 
+    .then(id => {
+      response.status(201).json({ id: id[0] })
+    })
+    .catch(error => {
+      response.status(500).json({error})
+    })
+  }
+});
+
+
 
 //POST - individual project
 //POST - individual palette

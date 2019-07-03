@@ -42,5 +42,17 @@ describe('Server', () => {
            expect(palette.length).toEqual(expectedPalette.length)
         })
     });
+    describe('POST /api/v1/projects', () => {
+        it('should post a new project to the database', async () => {
+            const newProject = {project_name: "Summer Colors"}
+            const response = await request(app)
+                                    .post('/api/v1/projects')
+                                    .send(newProject)
+           const projects = await database('projects').where('id', response.body.id).select();
+           const project = projects[0];
+           expect(project.project_name).toEqual(newProject.project_name)
+        });
+    });
+
     //We are getting the data we want, but timestamps is in strings, so this is why we're testing length
 })

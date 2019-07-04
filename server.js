@@ -124,8 +124,42 @@ app.put('/api/v1/palettes/:id', (request, response) => {
   })
 
 
-//PUT - individual palette
 
-//DELETE - individual projec
-//DELETE - individual palette
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.delete('/api/v1/palettes/:id', (request, response) => {
+  const id = parseInt(request.params.id);
+  database('palettes').where('id', id).delete()
+  .then(palette => {
+    if (!palette) {
+      response.status(404).json({ error: 'This palette does not exist. Nothing was deleted.'})
+    } else {
+      response.status(200).send('The palette was deleted')
+    }
+  })
+  .catch(error => {
+    response.status(500).json({error})
+  })
+})
  module.exports = app;

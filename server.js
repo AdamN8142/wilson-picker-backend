@@ -149,8 +149,8 @@ app.put('/api/v1/palettes/:id', (request, response) => {
 
 
 app.delete('/api/v1/palettes/:id', (request, response) => {
-  const id = parseInt(request.params.id);
-  database('palettes').where('id', id).delete()
+  const { id } = request.params;
+  database('palettes').where({ id }).delete()
   .then(palette => {
     if (!palette) {
       response.status(404).json({ error: 'This palette does not exist. Nothing was deleted.'})

@@ -19,23 +19,49 @@ app.listen(app.get('port'), () => {
 
 
 app.get('/api/v1/projects', async (request, response ) => {
-  const projects = await database('projects').select();
-  response.status(200).json(projects);
+  try {
+    const projects = await database('projects').select();
+    response.status(200).json(projects);
+  } catch(error){
+    response.status(500).json({error})
+  }
 })
 
 app.get('/api/v1/projects/:id', async (request, response ) => {
-  const project = await database('projects').where('id', request.params.id).first();
-  response.status(200).json(project);
+  try {
+    const { id } = request.params
+    const project = await database('projects').where('id', request.params.id).first();
+    if(project) {
+      response.status(200).json(project);
+    } else {
+      response.status(404).json({error: `We could not find a project with the id ${id}` })
+    }
+  } catch (error) {
+    response.status(500).json({error})
+  }
 })
 
 app.get('/api/v1/palettes', async (request, response)=> {
-  const palettes = await database('palettes').select();
-  response.status(200).json(palettes)
+  try {
+    const palettes = await database('palettes').select();
+    response.status(200).json(palettes)
+  } catch(error) {
+    response.status(500).json({error})
+  }
 })
 
 app.get('/api/v1/palettes/:id', async (request, response) => {
-  const palette = await database('palettes').where('id', request.params.id).first();
-  response.status(200).json(palette)
+  try {
+    const { id } = request.params
+    const palette = await database('palettes').where('id', request.params.id).first();
+    if(palette) {
+      response.status(200).json(palette)
+    } else {
+      response.status(404).json({error: `We could not find a palette with the id ${id}`})
+    }
+  } catch {
+    response.status(500).json({error})
+  }
 })
 
 app.post('/api/v1/projects', (request, response) => {

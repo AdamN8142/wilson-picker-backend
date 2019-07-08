@@ -123,6 +123,25 @@ app.put('/api/v1/palettes/:id', (request, response) => {
       })
   })
 
+  app.delete('/api/v1.projects/:id', (request,response) => {
+    const { id } = request.params;
+    database('projects')
+      .where({id})
+      .del()
+      .then(result => {
+        if(result){
+          response.status(204).send();
+        } else {
+          response.status(404).json({
+            error: `Sorry, could not find proect to delete with ${id}`
+          })
+        }
+      })
+      .catch(error => {
+        response.status(500).json({error})
+      })
+  })
+
 
 
 

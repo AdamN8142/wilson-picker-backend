@@ -3,12 +3,14 @@ const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 const express = require('express');
 const app = express();
-// const bodyParser = require("body-parser");
+const bodyParser = require("body-parser");
+const cors = require('cors')
 
 require('dotenv').config();
 app.use(express.json());
 app.set('port', process.env.PORT || 3001);
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
+app.use(cors())
 
 
 

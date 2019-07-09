@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --forceExit",
-    "start": "node server.js"
+    "start": "node server.js",
+    "migrate": "knex migrate:latest --env=test",
+    "seed": "knex seed:run --env=test"
   },
   "author": "",
   "license": "ISC",

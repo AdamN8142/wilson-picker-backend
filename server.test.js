@@ -55,8 +55,8 @@ describe('Server', () => {
            const palette = response.body;
            expect(palette.length).toEqual(expectedPalette.length)
         });
-        it.skip('should return a status of 200 if the specified palette is returned', async () => {
-            const expectedPalette = await database('projects').first();
+        it('should return a status of 200 if the specified palette is returned', async () => {
+            const expectedPalette = await database('palettes').first();
             const id = expectedPalette.id
             const response = await request(app).get(`/api/v1/palettes/${id}`);
             expect(response.status).toBe(200) 
@@ -144,36 +144,6 @@ describe('Server', () => {
             expect(palette.palette_name).toEqual(paletteToUpdate.palette_name)
         })
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     describe('DELETE /api/v1/palettes/:id', () => {
         it('should delete the specified palette', async () => {
             const paletteToDelete = await database('palettes').first()
@@ -188,7 +158,7 @@ describe('Server', () => {
             const response = await request(app).delete(`/api/v1/palettes/${id}`)
             expect(response.status).toBe(200) 
         });
-        it.skip('should return a 404 error if no palette is deleted', async () => {
+        it('should return a 404 error if no palette is deleted', async () => {
             const response = await request(app).delete(`/api/v1/palettes/65`)
             expect(response.status).toBe(404)
             expect(response.body.error).toEqual('This palette does not exist. Nothing was deleted.') 

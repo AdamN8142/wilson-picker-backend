@@ -34,6 +34,11 @@ describe('Server', () => {
             const response = await request(app).get(`/api/v1/projects/${id}`);
             expect(response.status).toBe(200) 
         });
+        it('should return a 404 if project is not found', async () => {
+            const id = 1234
+            const response = await request(app).get(`/api/v1/projects/${id}`);
+            expect(response.status).toBe(404) 
+        });
     });
     describe('GET /api/v1/palettes', () => {
         it('should return all the palettes in the database', async () => {
@@ -60,6 +65,11 @@ describe('Server', () => {
             const id = expectedPalette.id
             const response = await request(app).get(`/api/v1/palettes/${id}`);
             expect(response.status).toBe(200) 
+        });
+        it('should return a 404 if palette is not found', async () => {
+            const id = 1234
+            const response = await request(app).get(`/api/v1/palettes/${id}`);
+            expect(response.status).toBe(404) 
         });
     });
     describe('POST /api/v1/projects', () => {

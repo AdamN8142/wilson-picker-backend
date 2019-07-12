@@ -5,6 +5,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require("body-parser");
 const cors = require('cors')
+const port = process.env.PORT || 3001
 
 require('dotenv').config();
 app.use(express.json());
@@ -14,11 +15,13 @@ app.use(cors())
 
 
 
-app.listen(app.get('port'), () => {
- console.log(`Trying out environment variables over on http://localhost:${app.get('port')}`);
+// app.listen(app.get('port'), () => {
+//  console.log(`Trying out environment variables over on http://localhost:${app.get('port')}`);
+// });
+
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}.`) // telling app to listen to port 3000, which will run the server
 });
-
-
 
 app.get('/api/v1/projects', async (request, response ) => {
   try {
